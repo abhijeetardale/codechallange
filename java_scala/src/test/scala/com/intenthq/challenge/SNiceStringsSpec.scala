@@ -25,4 +25,15 @@ class SNiceStringsSpec extends Specification {
   }
   section("nice")
   section("scala")
+  "SNiceStrings with more elements" should {
+    "ugknbfddgicrmopn, aaa are nice" in {
+      SNiceStrings.nice(List("ugknbfddgicrmopn", "aaa")) must_== 2
+    }
+    "jchzalrnumimnmhp, haegwjzuvuyypxyu, dvszwmarrgswjxmb are naughty" in {
+      SNiceStrings.nice(List("jchzalrnumimnmhp", "haegwjzuvuyypxyu", "dvszwmarrgswjxmb")) must_== 0
+    }
+    "ugknbfddgicrmopn, aaa are nice and jchzalrnumimnmhp, haegwjzuvuyypxyu, dvszwmarrgswjxmb are naughty" in {
+      SNiceStrings.nice(List("ugknbfddgicrmopn", "aaa", "jchzalrnumimnmhp", "haegwjzuvuyypxyu", "dvszwmarrgswjxmb")) must_== 2
+    }
+  }
 }

@@ -1,4 +1,6 @@
-package com.intenthq.challenge;
+package com.intenthq.challenge
+
+import scala.annotation.tailrec
 
 object SEnigma {
 
@@ -22,6 +24,29 @@ object SEnigma {
   // Following the above rules, the message would be: “1N73N7 HQ”
   // Check the tests for some other (simpler) examples.
 
-  def deciphe(map: Map[Int, Char])(message: List[Int]): String = ???
+  def deciphe(map: Map[Int, Char])(message: List[Int]): String = {
+
+//    val keys = map.keys.toList
+//    keys.foldLeft(message.mkString) { (msg, key) =>
+//      if (msg.containsSlice(key.toString)) msg.replaceAll(key.toString, map(key).toString) else msg
+//    }
+
+    @tailrec
+    def applyRule(currentList: List[Int], subList: List[Int], rule: List[Char]): String = {
+      currentList.headOption match {
+        case Some(cur) if map.contains(cur) || map.contains((subList :+ cur).mkString.toInt) =>
+          applyRule(currentList.tail, subList :+ cur, rule)
+       case Some(cur) if subList.nonEmpty && map.contains(subList.mkString.toInt) =>
+          applyRule(currentList.tail, List(cur), rule :+ map(subList.mkString.toInt))
+        case Some(cur) if subList.nonEmpty=>
+          applyRule(currentList.tail, List(cur), rule ++ subList.flatMap(_.toString.toList))
+        case Some(cur) =>
+          applyRule(currentList.tail, subList :+ cur, rule)
+        case _ => (rule :+ map.getOrElse(subList.mkString.toInt, subList)).mkString
+      }
+    }
+    applyRule(message, List(), List())
+
+  }
 
 }

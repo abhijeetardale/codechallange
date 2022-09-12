@@ -28,6 +28,12 @@ class SEnigmaSpec extends Specification {
     "(1,2,3,7,3,2,3,7,2,3,4,8,9,7,8) is '1N73N7 HQ'" in {
       deciphe(List(1,2,3,7,3,2,3,7,2,3,4,8,9,7,8)) must_== "1N73N7 HQ"
     }
+
+    "(1,2,3,7,3,2,3,7,2,3,4,8,9,7,8) is '1N73N7 HQ'" in {
+      val map = Map(23 -> 'N', 234 -> ' ', 89 -> 'H', 78 -> 'Q', 789 -> 'J', 7891 -> 'K', 37 -> 'A')
+      val deciphe = SEnigma.deciphe(map) _
+      deciphe(List(1,2,3,7,3,2,3,7,2,3,4,7,8,7,8,9,1,7,8,9)) must_== "1N73N7 QKJ"
+    }
   }
   section("enigma")
   section("scala")
